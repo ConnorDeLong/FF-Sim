@@ -1,0 +1,13 @@
+
+CHECKS TO MAKE/THINGS TO LOOK INTO:
+
+- Look into leagues that with missing data from the Matchup Data and leagues with 
+missing data from the Projected Points data 
+    a) None of the leagues in the Matchup data have week 17 data and only a few 
+    hundred have week 16 data. This shouldn't be an issue since we only need data 
+    from the first week of playoffs (which should be week 15 at the latest), but 
+    it is a little odd.
+    a) Only ~60 leagues in the Matchup data have missing data for weeks 1-15
+- Check that the scores from the Matchup and Projected data match
+
+
