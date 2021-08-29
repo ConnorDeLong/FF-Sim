@@ -8,7 +8,7 @@ each dataframe as a csv to a specified location
 import pandas as pd
 from settings_data import settingsData, pull_settings_data
 from team_data import teamData, pull_team_data, pull_divisions_data
-from points_data import pull_matchup_data
+from point_data import pull_matchup_data
 
 
 def pull_all_leagues_remaining_data(season_id, league_ids, index_start, index_end, league_id_example=48347143):

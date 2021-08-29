@@ -1,0 +1,50 @@
+﻿File Name,Key,Field Name,Field Description,Python dtype
+DivisionData_Season_League_Division,PK/FK,season_id,Year of the season,int64
+DivisionData_Season_League_Division,PK/FK,league_id,ESPN League ID,int64
+DivisionData_Season_League_Division,,division_name,Name of the division (usually East or West),object
+DivisionData_Season_League_Division,,division_size,Number of teams in the division,int64
+DivisionData_Season_League_Division,PK/FK,divisionId,ID of the division,int64
+MatchupData_Season_League_Team_Week,PK/FK,season_id,Year of the season,int64
+MatchupData_Season_League_Team_Week,PK/FK,league_id,ESPN League ID,int64
+MatchupData_Season_League_Team_Week,PK/FK,week_number,NFL Week number,int64
+MatchupData_Season_League_Team_Week,,macthupPeriodId,Matchup number (one matchup can span multiple weeks),int64
+MatchupData_Season_League_Team_Week,PK/FK,teamId,Team ID,int64
+MatchupData_Season_League_Team_Week,,teamId_opp,Team ID of the opponent,int64
+MatchupData_Season_League_Team_Week,,score,Number of points scored,float64
+MatchupData_Season_League_Team_Week,,score_opp,Number of points scored by the opponent,float64
+MatchupData_Season_League_Team_Week,,home_or_away,Indicates if the team is home or away (could effect scoring),object
+MatchupData_Season_League_Team_Week,,regular_season_ind,Dummy variable to indicate if it's a regular season or playoff matchup,int64
+MatchupData_Season_League_Team_Week,,playoffTierType,Indicates what Playoff bracket the team is in for the given week,object
+ProjPointsData_Season_League_Team_Player_Week,PK/FK,Week,NFL Week number,int64
+ProjPointsData_Season_League_Team_Player_Week,PK/FK,Team,Team ID,int64
+ProjPointsData_Season_League_Team_Player_Week,PK,Player,Player Name,object
+ProjPointsData_Season_League_Team_Player_Week,,Slot,Position ID,int64
+ProjPointsData_Season_League_Team_Player_Week,,Pos,Position,object
+ProjPointsData_Season_League_Team_Player_Week,,Status,Inury status of the player (I don't think this varies by week),object
+ProjPointsData_Season_League_Team_Player_Week,,Proj,Projected points,float64
+ProjPointsData_Season_League_Team_Player_Week,,Actual,Actual points,float64
+ProjPointsData_Season_League_Team_Player_Week,,macthupPeriodId,Matchup number (one matchup can span multiple weeks),float64
+ProjPointsData_Season_League_Team_Player_Week,,regular_season_ind,Dummy variable to indicate if it's a regular season or playoff matchup,float64
+ProjPointsData_Season_League_Team_Player_Week,,team_fullName,Team name,object
+ProjPointsData_Season_League_Team_Player_Week,FK,team_divisionId,ID of the division,float64
+ProjPointsData_Season_League_Team_Player_Week,,team_division_name,Name of the division (usually East or West),object
+ProjPointsData_Season_League_Team_Player_Week,,league_found_index,Ignore,int64
+ProjPointsData_Season_League_Team_Player_Week,PK/FK,league_id,ESPN League ID,int64
+SettingsData_Season_League,PK/FK,season_id,Year of the season,int64
+SettingsData_Season_League,PK/FK,league_id,ESPN League ID,int64
+SettingsData_Season_League,,settings_playoffSeedingRule,Tiebreaker used for playoff seeding,object
+SettingsData_Season_League,,settings_playoffSeedigRuleBy,Not sure what this is (all 0s),int64
+SettingsData_Season_League,,settings_num_playoff_teams,Number of teams that make the playoffs,int64
+SettingsData_Season_League,,settings_firstScoringPeriod,First week of the season,int64
+SettingsData_Season_League,,settings_finalScoringPeriod,Last week of the season,int64
+SettingsData_Season_League,,settings_scoring_type,Win/Loss settings (all H2H_POINTS),object
+SettingsData_Season_League,,settings_reg_season_matchup_tiebreaker,Tiebreaker used for regular season matchups,object
+SettingsData_Season_League,,settings_playoff_matchup_tiebreaker,Tiebreaker used for regular playoff matchups,object
+SettingsData_Season_League,,settings_home_team_bonus,Number of additional points the home team gets,int64
+TeamData_Season_League_Team,PK/FK,season_id,Year of the season,int64
+TeamData_Season_League_Team,PK/FK,league_id,ESPN League ID,int64
+TeamData_Season_League_Team,PK/FK,team_id,Team ID,float64
+TeamData_Season_League_Team,,team_primaryOwnerKey,Used to pull division id (not needed),object
+TeamData_Season_League_Team,,team_fullName,Name of the team owner,object
+TeamData_Season_League_Team,,team_nickName,Team name,object
+TeamData_Season_League_Team,FK,team_divisionId,ID of the division,float64

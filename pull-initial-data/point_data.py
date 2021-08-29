@@ -6,6 +6,8 @@ separately from the rest due to how long it takes.
 '''
 
 import pandas as pd
+import numpy as np
+import general_functions
 from pull_api_data import pull_data
 from settings_data import settingsData
 from team_data import teamData
@@ -171,6 +173,12 @@ def create_week_team_player_df(season_id, league_id, week_start=1, week_end=17):
     columns = ['Week', 'Team', 'Player', 'Slot', 'Pos', 'Status', 'Proj', 'Actual']
                 
     data = pd.DataFrame(data, columns=columns)
+    
+    data['Season'] = season_id
+    
+    data = general_functions.rearrange_df_columns(data, ['Season'])
+    
+    data['Starter Indicator'] = np.where(data['Pos'] == 'Bench', 0, 1)
                 
     return data
 
@@ -255,6 +263,7 @@ def pull_all_leagues_projection_data(season_id, league_ids, index_start, index_e
 
 
 if __name__ == '__main__':
+    pd.options.display.max_columns = 100
     # matchup_data = pull_data(2020, 48347143, params=[["view", "mMatchup"], ["view", "mMatchupScore"]])
     # # matchup_data = pull_data(2020, 48347143, params=[["view", "mMatchupScore"]])
     

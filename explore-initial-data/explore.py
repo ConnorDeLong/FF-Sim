@@ -1,12 +1,8 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Apr 25 12:26:39 2021
 
-@author: conde
-"""
 
 import pandas as pd
-from general_functions import get_list_of_files
+import numpy as np
+import general_functions
 import os
 
 LEAGUE_DATA_DIRECTORY = "D:\Simulation-Data"
@@ -14,7 +10,8 @@ LEAGUE_DATA_DIRECTORY = "D:\Simulation-Data"
 def read_in_data(load_data_dir):
     """ Returns a dictionary containing every dataframe created from each csv found in the load_data_dir """
     
-    file_list = get_list_of_files(load_data_dir, extensions_list=['.csv'])
+    file_list = general_functions.get_list_of_files(load_data_dir, 
+                                                    extensions_list=['.csv'])
     
     raw_df_dict = {}
     for file in file_list:
@@ -25,23 +22,43 @@ def read_in_data(load_data_dir):
         else: 
             df_name = file
 
-        full_file_path = os.path.join(LEAGUE_DATA_DIRECTORY, file)
+        full_file_path = os.path.join(load_data_dir, file)
 
         raw_df_dict[df_name] = pd.read_csv(full_file_path)
         
     return raw_df_dict
 
 
-def merge_proj_and_matchup_data(proj_data, matchup_data):
-    """ Returns a dataframe that mergeds the proj_data and matchup_data"""
+def update_proj_data(df):
+    """ Add/Update any variables to the Projected data that are needed """
+    
+    df = df.copy()
+    
+    if 'Season' in list(df.columns):
+        pass
+    else:
+        df['Season'] = 2020
+        
+        df = general_functions.rearrange_df_columns(df, ['Season'])
+        
+    df['Starter Indicator'] = np.where(df['Pos'] == 'Bench', 0, 1)
+    
+    return df
+
+
+def compare_proj_and_matchup_points(proj_data, matchup_data):
+    """ Returns a dataframe that merges the proj_data and matchup_data"""
+
+    proj_data = proj_data[proj_data['Starter Indicator'] == 1].copy()
+    matchup_data = matchup_data.copy()
 
     # Aggregate the proj_data to be on the same level as the matchup_data
-    by_group = ['league_id', 'Week', 'Team']
+    by_group = ['Season', 'league_id', 'Week', 'Team']
     agg_proj_points_data = proj_data.groupby(by_group, as_index=False)['Actual'].sum()
 
     keep_vars = ['season_id', 'league_id', 'week_number', 'teamId', 'score']
     matchup_data = matchup_data[keep_vars]
-
+    
     left_on_list=['league_id', 'Week', 'Team']
     right_on_list=['league_id', 'week_number', 'teamId']
     df = pd.merge(agg_proj_points_data, matchup_data,
@@ -57,6 +74,10 @@ def merge_proj_and_matchup_data(proj_data, matchup_data):
     drop_vars = ['Week', 'Team', 'season_id']
     df.drop(columns=drop_vars, inplace=True)
     
+    df['ProjPoints_Matchup_Score_Diff'] = df['ProjPointsData_Score'] - df['MatchupData_Score']
+    df['ProjPoints_Matchup_Score_Diff'] = df['ProjPoints_Matchup_Score_Diff'].round(2)
+    df = add_vars(df)
+    
     return df
 
 
@@ -71,8 +92,7 @@ def add_vars(df):
         df['ProjPointsData_Score'].isnull()] = 1
     
     df['MatchupData_Missing'] = 0
-    df['MatchupData_Missing'].loc[
-    df['MatchupData_Score'].isnull()] = 1
+    df['MatchupData_Missing'].loc[df['MatchupData_Score'].isnull()] = 1
     
     return df
 
@@ -85,15 +105,45 @@ def check_missing_data(df, missing_data_flag):
 
 
 if __name__ == '__main__':
+    pass
+
+    pd.options.display.max_columns = 100
+
+    main_data_dict = read_in_data(LEAGUE_DATA_DIRECTORY)
+    # print(main_data_dict.keys())
     
-    file_list = get_list_of_files(LEAGUE_DATA_DIRECTORY, extensions_list=['.csv'])
     
-    print(file_list)
+    # df_proj_point = main_data_dict['ProjPointsData']
+    # df_proj_point = update_proj_data(df_proj_point)
+    # print(list(df_proj_point.columns))
+    # print(df_proj_point.head)    
     
-    check = pd.read_csv(os.path.join(LEAGUE_DATA_DIRECTORY, 'ProjPointsData_Season_League_Team_Player_Week.csv'))
+    # df_matchup = main_data_dict['MatchupData']
+    # print(list(df_matchup.columns))
     
-    # check = read_in_data(LEAGUE_DATA_DIRECTORY)
+    # check_merge = compare_proj_and_matchup_points(df_proj_point, df_matchup)
+    # print(check_merge.head())
     
-    # print (type(check))
+    # check_non_missing_data = check_merge[(check_merge['ProjPointsData_Missing'] == 0) &
+    #                                       (check_merge['MatchupData_Missing'] == 0)
+    #                                       ]
+    
+    # check_diff = check_non_missing_data.groupby(
+    #     ['ProjPoints_Matchup_Score_Diff'], 
+    #     as_index=False)['ProjPoints_Matchup_Score_Diff'].count()
+    
+    # check_diff = check_non_missing_data['ProjPoints_Matchup_Score_Diff'].value_counts()
+    
+    # print(check_diff)
+    # check_non_missing_data.to_csv('CHECK.csv', index=False)
+
+    
+    
+    
+    # check = df_proj_point.groupby(['Pos', 'Starter Indicator'], as_index=False)['Actual'].sum()    
+    # print(check)
+    
+
+    
     
     pass

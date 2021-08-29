@@ -9,5 +9,28 @@ missing data from the Projected Points data
     it is a little odd.
     a) Only ~60 leagues in the Matchup data have missing data for weeks 1-15
 - Check that the scores from the Matchup and Projected data match
+    a) ID leagues that never have any differences
+    b) check overall average difference by week
+
+- Things to filter out:
+    a) Leagues that don't have an entire regular season of data (need at least
+    one playoff week)
+        1. Note: These leagues wouldn't impact the forecasting model, but they would
+        make it more difficult to evaluate the simulation results
+    b) Leagues with any Team/Week that is missing data
+    c) Leagues with any non-consecutive weeks
+    
+- Metric to include in the projected point aggregation
+    a) Starter actual and projected points
+    b) Bench actual and projected points
+    c) Max projectd points
+        1. THIS WILL REQUIRE LOOKING AND PULLING THE FOLLOWING DATA:
+            - Flex eligbility
+            - Actual position for bench players rather than just "bench"
+        2. Need to consider scenario where no rostered player is projected for
+        any points (e.g. fill in with average for that position?). This likely
+        won't show up in the data since it represents what the rosters actually
+        were for each week (i.e. teams already made replacements), but could occur
+        if it gets used in the middle of the week
 
 

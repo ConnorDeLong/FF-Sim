@@ -9,6 +9,42 @@ TODO:
 import pandas as pd
 import os
 
+
+def create_df_name(file_name):
+    """ 
+    Returns only the word preceding the first underscore in the file_name.
+    This is used to dynamically create a df name for each csv file.
+    """
+    
+    df_name_index = file_name.find('_')
+    
+    if df_name_index > -1:
+        df_name = file_name[:df_name_index]
+    else: 
+        df_name = file_name
+        
+    return df_name
+    
+    
+def read_in_all_data(load_data_dir: str) -> dict:
+    """ 
+    Returns a dictionary containing every dataframe created from each csv 
+    found in the load_data_dir.
+    """
+    
+    file_list = get_list_of_files(load_data_dir, 
+                                                    extensions_list=['.csv'])
+    
+    raw_df_dict = {}
+    for file in file_list:
+        df_name = create_df_name(file)
+
+        full_file_path = os.path.join(load_data_dir, file)
+
+        raw_df_dict[df_name] = pd.read_csv(full_file_path)
+        
+    return raw_df_dict
+
 #####################################################################################
 ################################# General Functions #################################
 #####################################################################################
