@@ -170,15 +170,14 @@ def create_week_team_player_df(season_id, league_id, week_start=1, week_end=17):
         except:
             pass
                 
-    columns = ['Week', 'Team', 'Player', 'Slot', 'Pos', 'Status', 'Proj', 'Actual']
+    columns = ['week_number', 'team_id', 'player', 'slot', 'position', 
+               'status', 'Proj', 'Actual']
                 
     data = pd.DataFrame(data, columns=columns)
     
     data['Season'] = season_id
     
-    data = general_functions.rearrange_df_columns(data, ['Season'])
-    
-    data['Starter Indicator'] = np.where(data['Pos'] == 'Bench', 0, 1)
+    data['Starter Indicator'] = np.where(data['position'] == 'Bench', 0, 1)
                 
     return data
 
@@ -283,5 +282,5 @@ if __name__ == '__main__':
     
     matchup_data = create_week_team_player_df(2020, 48347143, week_end=1)
 
-    print(matchup_data.head())    
+    print(matchup_data)    
     pass

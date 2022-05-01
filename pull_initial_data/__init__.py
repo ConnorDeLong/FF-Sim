@@ -1,0 +1,1 @@
+from pull_initial_data.compile_league_data import compile_league_data

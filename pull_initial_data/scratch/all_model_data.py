@@ -6,8 +6,8 @@ each dataframe as a csv to a specified location
 '''
 
 import pandas as pd
-from settings_data import settingsData, pull_settings_data
-from team_data import teamData, pull_team_data, pull_divisions_data
+from settings_data import settingsData, pull_settings_data, pull_divisions_data
+from team_data import teamData, pull_team_data
 from point_data import pull_matchup_data
 
 
@@ -89,21 +89,20 @@ def write_df_to_csv(df_dict, file_names, directory):
 
 if __name__ == '__main__':
     # NEED TO UPDATE THIS
-    # import find_leagues
-    # FILE_PATH = find_leagues.FILE_PATH
+     file = 'Leagues_Found_Cleaned.csv'
     
-    # df_leagues_found = pd.read_csv(file)
-    # df_leagues_found = df_leagues_found.loc[df_leagues_found['seasonId'] == 2020]
+     df_leagues_found = pd.read_csv(file)
+     df_leagues_found = df_leagues_found.loc[df_leagues_found['seasonId'] == 2020]
+     df_leagues_found = df_leagues_found.iloc[0:100]
     
-    # leagues_found_list = list(df_leagues_found['leagueId'])
+     leagues_found_list = list(df_leagues_found['leagueId'])
     
-    # df_dict = pull_all_leagues_remaining_data(2020, leagues_found_list, 0, 1)
+     df_dict = pull_all_leagues_remaining_data(2020, leagues_found_list, 0, 100)
     
-    # df_dict['df_matchup_data_stack']
+     print(df_dict['df_matchup_data_stack'])
     
     # file_names = ['TeamData_Season_League_Team', 'SettingsData_Season_League', 
     #               'DivisionData_Season_League_Division', 'MatchupData_Season_League_Team_Week']
             
     # write_df_to_csv(df_dict, file_names, "/home/cdelong/Python-Projects/FF-Web-App/Simulation-Data/")
     
-    pass

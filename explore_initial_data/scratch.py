@@ -5,6 +5,13 @@ Created on Fri May  7 16:13:23 2021
 @author: conde
 """
 
+from api_data.api_data import ApiData
+
+import sys
+
+for path in sys.path:
+    print(path)
+
 import os
 import psutil
 # import explore
@@ -41,26 +48,26 @@ import numpy as np
 
 
 
-class test():
-    
-    second_param = "Second"
-    
-    def __init__(self, main_param, second_param):
-        
-        self.main_param = main_param
-        
-        
-    def check_main_param(self):
-        return self.main_param
-    
-    def check_second_param(self):
-        return test.second_param
-    
-test_this = test("Check", "Second")
-test_second = test("Check", "Second")
-
-test.second_param = "New"
-
-
-print(test_second.check_second_param())
-print(test_second.second_param)
+#class test():
+#    
+#    second_param = "Second"
+#    
+#    def __init__(self, main_param, second_param):
+#        
+#        self.main_param = main_param
+#        
+#        
+#    def check_main_param(self):
+#        return self.main_param
+#    
+#    def check_second_param(self):
+#        return test.second_param
+#    
+#test_this = test("Check", "Second")
+#test_second = test("Check", "Second")
+#
+#test.second_param = "New"
+#
+#
+#print(test_second.check_second_param())
+#print(test_second.second_param)
